@@ -1,5 +1,5 @@
 <template>
-  <div class="ordering"  v-loading.fullscreen.lock="Loading">
+  <div class="home-page"  v-loading.fullscreen.lock="Loading">
     <!-- 标题 -->
     <div class="home-list">
       <div class="home-title">标题</div>
@@ -62,10 +62,10 @@ import { home } from '../../api/api.js'
 import { articleurl, articleimgurl } from '../../api/request.js'
 const toolbarOptions = [
   ['bold', 'italic', 'underline', 'strike'],
+  [{'list': 'ordered'}, { 'list': 'bullet' }], // 列表
   [{ color: [] }, { background: [] }],
   [{ 'indent': '-1' }, { 'indent': '+1' }],
-  [{ 'size': ['12px', '14px', '15px', '16px','17px', '18px', '20px', '24px'] }],
-  // [{ 'font': [] }],
+  [{ 'size': ['12', false, '16', '18', '20', '24'] }], // 字体大小
   [{ 'align': [] }],
   ["image"] //上传图片
 ]
@@ -74,11 +74,11 @@ export default{
     return {
       content: '从这里开始写文章...',//文章内容
       quillUpdateImg: false,
-      Loading:false,
+      Loading: false,
       editorOption: {
         modules: {
           toolbar: {
-            container:toolbarOptions,
+            container: toolbarOptions,
             handlers:{
               'image': (value)=> {
                 if (value) {
@@ -132,7 +132,6 @@ export default{
     uploadError() {
       // loading动画消失
       this.Loading = false
-      console.log('图片错误')
       new this.mytitle(this.$message, 'warning', '上传图片失败,请重试').funtitle()
     },
 
@@ -163,8 +162,7 @@ export default{
         }
       })
       .catch((err)=>{
-        // console.log(err)
-        new this.mytitle(this.$message, 'warning', error).funtitle()
+        new this.mytitle(this.$message, 'warning', err).funtitle()
       })
     }
   }

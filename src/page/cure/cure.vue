@@ -1,5 +1,5 @@
 <template>
-  <div class="ordering">
+  <div class="home-page">
     <div>
       <div class="home-list" v-for="(item,index) in city" :key="index">
         <div class="home-title">{{item.adderss}}</div>

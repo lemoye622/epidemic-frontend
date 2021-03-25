@@ -7,10 +7,10 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
 
-import quillEditor from 'vue-geng-editor'
-import 'quill-geng/dist/quill.core.css'
-import 'quill-geng/dist/quill.snow.css'
-import 'quill-geng/dist/quill.bubble.css'
+import quillEditor from 'vue-quill-editor'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
 Vue.use(quillEditor)
 
 //全局引入css文件

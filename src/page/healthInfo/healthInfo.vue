@@ -1,5 +1,5 @@
 <template>
-  <div class="ordering">
+  <div class="home-page">
     <!-- 表格布局 -->
     <div class="var-table" v-if="reveal">
       <!-- 标题 -->
@@ -67,7 +67,7 @@
 
     <!-- 没有数据 -->
     <div class="nodatas" v-if="!reveal">
-      还没有上报人员
+      暂无人员上报行程信息！
     </div>
   </div>
 </template>
@@ -106,13 +106,15 @@ export default {
       getdata(healthInforUrl)
       .then((res)=>{
         console.log(res)
-        if (res.data.msg == 'SUCCESS') {
-          if (res.data.data.length === 0) {
-            // 没有数据时，隐藏表格组件
-            this.reveal = false
-          } else {
-            this.healthInfo = res.data.data
-          }
+        if (res.status === 200) {
+          // if (res.data.data.length === 0) {
+          //   // 没有数据时，隐藏表格组件
+          //   this.reveal = false
+          // } else {
+          //   this.healthInfo = res.data.data
+          // }
+          this.reveal = false
+          this.healthInfo = res.data.data
         }
       })
       .catch((err)=>{
@@ -182,6 +184,7 @@ export default {
 .nodatas {
   text-align: center;
   padding-top: 100px;
+  font-size: 20px;
   color: #C0C4CC;
 }
 /* 完整弹窗 */
