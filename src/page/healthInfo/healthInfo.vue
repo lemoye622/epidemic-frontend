@@ -1,7 +1,7 @@
 <template>
-  <div class="home-page">
+  <div class="home-page" v-loading="loading">
     <!-- 表格布局 -->
-    <div class="var-table" v-if="reveal">
+    <div class="var-table" v-if="vp === 1">
       <!-- 标题 -->
       <div class="var-title">
         <div v-for="(item,index) in tableData" :key="index">{{item}}</div>
@@ -66,7 +66,7 @@
     </el-dialog>
 
     <!-- 没有数据 -->
-    <div class="nodatas" v-if="!reveal">
+    <div class="nodatas" v-if="vp === 2">
       暂无人员上报行程信息！
     </div>
   </div>
@@ -79,8 +79,9 @@ import {healthInforUrl} from '../../api/request.js'
 export default {
   data() {
     return {
+      loading: true,
       // 控制表格的显示与隐藏
-      reveal: true,
+      vp: 0,
       dialogVisible: false,
       tableData: ['个人信息', '是否常住广东', '是否有不良症状', '粤康码状态'],
       completedata: [],
@@ -107,14 +108,14 @@ export default {
       .then((res)=>{
         console.log(res)
         if (res.status === 200) {
-          // if (res.data.data.length === 0) {
-          //   // 没有数据时，隐藏表格组件
-          //   this.reveal = false
-          // } else {
-          //   this.healthInfo = res.data.data
-          // }
-          this.reveal = false
-          this.healthInfo = res.data.data
+          this.loading = false
+          if (res.data.data.length === 0) {
+            // 没有数据时，隐藏表格组件
+            this.vp = 2
+          } else {
+            this.vp = 1
+            this.healthInfo = res.data.data
+          }
         }
       })
       .catch((err)=>{
