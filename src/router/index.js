@@ -7,6 +7,8 @@ import cure from '@/page/cure/cure'
 import death from '@/page/death/death'
 import healthInfo from '@/page/healthInfo/healthInfo'
 import article from '@/page/article/article'
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 
 Vue.use(Router)
 
@@ -56,7 +58,9 @@ const router = new Router({
 })
 
 // 路由导航守卫
+//页面打开时显示
 router.beforeEach((to, from, next) =>{
+  NProgress.start() 
   let token = localStorage.getItem("token")
   if(token && token == '2021314hebelove'){
     // 如果用户信息存在则往下执行
@@ -69,6 +73,12 @@ router.beforeEach((to, from, next) =>{
       next('/')
     }
   }
+})
+
+
+// 页面加载完成
+router.afterEach(() => {
+  NProgress.done()
 })
 
 
